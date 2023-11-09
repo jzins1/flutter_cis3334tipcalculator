@@ -42,12 +42,20 @@ class _MyHomePageState extends State<MyHomePage> {
   double _bill = 0.00;
   double _tipPercent = 0.15;
   double _tip = 0.00;
+  bool _excellentService = false;
 
   void _calculateTip() {
     _bill = double.parse(tipTextField.text);
+    _tipPercent = (_excellentService) ? 0.2 : 0.15;
     _tip = _bill * _tipPercent;
-    _bill += _tip;
+    setState(() {
+      _bill += _tip;
+    });
     // tipTextField.text =
+  }
+
+  void _updateTipResult() {
+
   }
 
   @override
@@ -64,12 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
             Text('Total Bill:'),
             TextField(controller: tipTextField),
             ElevatedButton(
+              child: Text("Calculate total bill"),
               onPressed: () {
                 _calculateTip();
               },
-              child: Text("Calculate total bill"),
             ),
-
+            Text("\nGreat service?:"),
+            Switch(
+              value: _excellentService,
+              onChanged: (value) {
+                setState(() {
+                  _excellentService = value;
+                });
+              },
+            ),
+            Text("\nTotal bill: " + _bill.toString()),
           ],
         ),
       ),
