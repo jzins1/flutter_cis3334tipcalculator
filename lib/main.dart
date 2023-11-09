@@ -38,24 +38,23 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // Initialize our widgets and variables
   final tipTextField = TextEditingController();
   double _bill = 0.00;
   double _tipPercent = 0.15;
   double _tip = 0.00;
   bool _excellentService = false;
 
+  // Executes when the calculate tip button is pressed
   void _calculateTip() {
-    _bill = double.parse(tipTextField.text);
-    _tipPercent = (_excellentService) ? 0.2 : 0.15;
-    _tip = _bill * _tipPercent;
+    _bill = double.parse(tipTextField.text); // Convert text field for this double variable
+    _tipPercent = (_excellentService) ? 0.2 : 0.15; // Uses ternary operator to set the tip percent variable
+    _tip = _bill * _tipPercent; // Adds the tip to the bill
+
+    // Updates the text field showing the bill amount
     setState(() {
       _bill += _tip;
     });
-    // tipTextField.text =
-  }
-
-  void _updateTipResult() {
-
   }
 
   @override
@@ -70,13 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Total Bill:'),
-            TextField(controller: tipTextField),
+            TextField(controller: tipTextField), // Links input box for later value reference
+            // Button for calculating total bill
             ElevatedButton(
               child: Text("Calculate total bill"),
               onPressed: () {
-                _calculateTip();
-              },
+                _calculateTip(); // Execute the tip calculate method
+              }
             ),
+
+            // Great service switch and label
             Text("\nGreat service?:"),
             Switch(
               value: _excellentService,
@@ -86,7 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            Text("\nTotal bill: " + _bill.toString()),
+
+            Text("\nTotal bill: " + _bill.toString()), // Display the total calculated bill (links variable from setState called above
           ],
         ),
       ),
